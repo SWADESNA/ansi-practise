@@ -1,0 +1,29 @@
+---
+- hosts: all
+  tasks:
+  - name: Hello world task
+    debug:
+      msg: "Hello Ansible!!!"
+
+  - name: Test default gz
+    archive:
+      path: /home/swady/koo
+
+  - name: Create gz of directory 
+    archive:
+      path: /home/swady/foo
+      dest: /home/swady/foo.gz
+
+  - name: Get checksum of file
+    stat:
+      path: /home/swady/foo.gz
+    register: myoutput
+    
+  - debug:
+      var: myoutput.stat.checksum
+    #msg: "sha of the file is {{ myoutput.stat.checksum }}"  
+
+
+    #Above both are correct way to display but not together any one of them
+    #var will print: "myoutput.stat.checksum": "xxxxx"
+    #msg will print: "msg": "sha of the file is xxxxx"
